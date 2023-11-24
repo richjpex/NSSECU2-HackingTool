@@ -58,7 +58,7 @@ def brute_force_password(target, wordlist_path):
                 return
 
     # If none of the passwords in the wordlist worked, print a failure message
-    print("Brute force failed. Password not found.")
+    print("Admin login failed. Password not found.")
     sys.exit(1)
 
 def get_rethinkdb_databases(target, password):
@@ -82,15 +82,13 @@ def get_rethinkdb_databases(target, password):
     print("\nList of databases and tables:")
     # Iterate over each database in the list of databases
     for db in databases:
-        # Print the name of the current database
-        print(f"\n{db}:")
+        print(f"\n(DB){db}:")
         # Get the list of tables in the current database
         tables = r.db(db).table_list().run(conn)
         # Iterate over each table in the list of tables
         for table in tables:
             # Print the name of the current table
-            print(f"    {table}:")
-
+            print(f"    (T){table}:")
             # Check if the current table is 'users'
             if table == 'users':
                 # Retrieve documents from the 'users' table

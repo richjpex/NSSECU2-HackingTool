@@ -49,9 +49,9 @@ const createTable = async () => {
 // Inserting sample data into the database
 const insertSeedData = async () => {
 	  await r.table('users').insert([
-	    { username: "user1", password: "1111"},
-	    { username: "user2", password: "2222"},
-	    { username: "user3", password: "3333"},
+	    { id: "user1", password: "1111"},
+	    { id: "user2", password: "2222"},
+	    { id: "user3", password: "3333"},
 	]).run(connection, function(err, result) {
 	    if (err) throw err;
 	    console.log(JSON.stringify(result, null, 2));
@@ -82,7 +82,7 @@ app.post('/login', async (req, res) => {
 
   try {
     // Check if the username is in the database
-    r.table('users').filter(r.row('username').eq(username)).
+    r.table('users').filter(r.row('id').eq(username)).
     run(connection, function(err, cursor) {
         if (err) throw err;
         cursor.toArray(function(err, result) {
@@ -132,7 +132,7 @@ app.post('/register', async (req, res) => {
 
   try {
     // Check if the username is in the database
-    r.table('users').filter(r.row('username').eq(username)).
+    r.table('users').filter(r.row('id').eq(username)).
     run(connection, function(err, cursor) {
         if (err) throw err;
         cursor.toArray(function(err, result) {
@@ -149,7 +149,7 @@ app.post('/register', async (req, res) => {
             {
 		// Add the user
             	r.table('users').insert([
-		{ username: username, password: password}
+		{ id: username, password: password}
 		]).run(connection, function(err, result) {
 		if (err) throw err;
 		console.log(JSON.stringify(result, null, 2));

@@ -24,7 +24,7 @@ def ask_for_wordlist_path():
     return user_input
 
 def brute_force_password(target, wordlist_path):
-    print("\nAttempting brute force...")
+    print("\nAttempting to login as admin..")
     with open(wordlist_path, 'r', errors='ignore') as custom_file:
         for custom_line in custom_file:
             custom_password = custom_line.strip()
@@ -32,7 +32,7 @@ def brute_force_password(target, wordlist_path):
                 get_rethinkdb_databases(target, custom_password)
                 return
     
-    print("Brute force failed. Password not found.")
+    print("Admin login failed. Password not found.")
     sys.exit(1)
 
 def get_rethinkdb_databases(target, password):

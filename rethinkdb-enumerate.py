@@ -83,12 +83,12 @@ if __name__ == "__main__":
     check_port_result = check_port_open(target_address, 28015)
 
     if check_port_result:
-        user_input = input(f"The port 28015 is OPEN. \n\nAttempt brute force? (y/n)? ").lower()
+        user_input = input(f"The port 28015 is OPEN. \n\nProceed with enumeration? (y/n)? ").lower()
         if user_input == 'y' or user_input == 'Y':
             password_file = ask_for_wordlist_path()
             brute_force_password(target_address, password_file)
         elif user_input == 'n' or user_input == 'N':
-            print("Brute force aborted.")
+            print("Enumeration aborted.")
             sys.exit(0)
         else:
             print("Invalid input. Exiting.")

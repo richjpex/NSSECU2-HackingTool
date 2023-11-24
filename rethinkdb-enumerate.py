@@ -46,10 +46,10 @@ def get_rethinkdb_databases(target, password):
     
     print("\nList of databases and tables:")
     for db in databases:
-        print(f"\n{db}:")
+        print(f"\n(DB){db}:")
         tables = r.db(db).table_list().run(conn)
         for table in tables:
-            print(f"    {table}:")
+            print(f"    (T){table}:")
             if table == 'users':
                 documents = r.db(db).table(table).run(conn)
                 for document in documents:

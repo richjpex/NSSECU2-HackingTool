@@ -6,7 +6,7 @@ const hbs = require('hbs');
 const app = express();
 
 // Setting IP Address and Port Number
-const IP_ADDRESS = '0.0.0.0';
+const IP_ADDRESS = 'localhost';
 const PORT = 3000;
 
 // Setting usual settings
@@ -22,11 +22,11 @@ var connection = null;
 const connectDB = async () => {
   try {
     // Connecting
-    connection = await r.connect({ host: 'localhost', port: 28015 });
+    connection = await r.connect({ host: 'localhost', port: 28015, password:'canada' });
 	  
     // Please uncomment the lines below if you want to populate the database with data
-    //await createTable(connection);
-    //await insertSeedData(connection); // Insert seed data after creating table
+    await createTable(connection);
+    await insertSeedData(connection); // Insert seed data after creating table
 	  
     console.log('Connected to RethinkDB');
   } catch (error) {

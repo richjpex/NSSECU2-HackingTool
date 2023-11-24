@@ -52,9 +52,12 @@ def get_rethinkdb_databases(target, password):
             if table == 'users':
                 documents = r.db(db).table(table).run(conn)
                 for document in documents:
-                    username = document.get('username', 'N/A')
-                    password = document.get('password', 'N/A')
-                    print(f"        Username: {username}, Password: {password}")
+                    username = document.get('id', 'N/A')
+                    user_password = document.get('password', 'N/A')
+                    if db=='rethinkdb' and username=='admin':
+                        print(f"        Username: {username}, Password: {password}")
+                    else:
+                        print(f"        Username: {username}, Password: {user_password}")
 
     conn.close()
 

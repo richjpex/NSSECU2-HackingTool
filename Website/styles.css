@@ -1,0 +1,93 @@
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+body {
+  font-family: 'Kalam', cursive;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to bottom, #F1FBFD, #E8F4FF);
+}
+
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background: linear-gradient(to bottom, #E8F4FF, #D1E2F5);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(to bottom, #D1E2F5, #C5D6F0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background: linear-gradient(to bottom, #C5D6F0, #D4D9EF);
+}
+
+.welcome-content {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(to bottom, #D1E2F5, #BBCEF0);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: float 2s ease-in-out infinite; /* Applying the floating animation */
+}
+
+.welcome-content h2 {
+  color: #333;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-content p {
+  font-size: 18px;
+  color: #333;
+}
+
+.welcome-content img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar {
+  background: linear-gradient(to bottom, #D1E2F5, #C5D6F0);
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #333;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a:hover {
+  background: linear-gradient(to bottom, #C5D6F0, #D4D9EF);
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}

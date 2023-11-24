@@ -43,7 +43,7 @@ def ask_for_wordlist_path():
 
 
 def brute_force_password(target, wordlist_path):
-    print("\nAttempting brute force...")
+    print("\nAttempting login as admin...")
     # Open the specified wordlist file ('wordlist_path') for reading
     with open(wordlist_path, 'r', errors='ignore') as custom_file:
         # Iterate over each line in the wordlist file
@@ -144,7 +144,7 @@ if __name__ == "__main__":
     # If the port is open, prompt the user for further action
     if check_port_result:
         # If the user agrees, ask for the path to a wordlist and attempt enumeration
-        user_input = input(f"The port 28015 is OPEN. \n\n Proceed with enumeration (y/n)? ").lower()
+        user_input = input(f"The port 28015 is OPEN. \n\nProceed with enumeration (y/n)? ").lower()
         if user_input == 'y' or user_input == 'Y':
             password_file = ask_for_wordlist_path()
             brute_force_password(target_address, password_file)

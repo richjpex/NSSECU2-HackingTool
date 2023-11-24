@@ -145,14 +145,14 @@ if __name__ == "__main__":
 
     # If the port is open, prompt the user for further action
     if check_port_result:
-        # If the user agrees, ask for the path to a wordlist and attempt a brute-force attack
-        user_input = input(f"The port 28015 is OPEN. \n\nAttempt brute force? (y/n)? ").lower()
+        # If the user agrees, ask for the path to a wordlist and attempt enumeration
+        user_input = input(f"The port 28015 is OPEN. \n\n Proceed with enumeration (y/n)? ").lower()
         if user_input == 'y' or user_input == 'Y':
             password_file = ask_for_wordlist_path()
             brute_force_password(target_address, password_file)
         # If the user declines, print a message and exit
         elif user_input == 'n' or user_input == 'N':
-            print("Brute force aborted.")
+            print("Enumeration aborted.")
             sys.exit(0)
         else:
             # If the user provides invalid input, print an error message and exit with a non-zero status

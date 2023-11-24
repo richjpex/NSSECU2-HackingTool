@@ -1,5 +1,5 @@
-# NSSECU2-HackingTool
-Advanced and Offensive Security (NSSECU2) Hacking Tool Project Repository
+# rethinkdb-enumerate.py
+Advanced and Offensive Security (NSSECU2) Hacking Tool Project Repository of Group 5
 
 ## How to run the program
 1. Install the requirements

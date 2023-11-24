@@ -32,4 +32,4 @@ This tool is provided for educational and ethical purposes only. The authors are
 1. Install the requirements
 ``pip install -r requirements.txt``
 2. Run the program
-``python rethinkdb-enumerate.py``
+``python rethinkdb-enumerate.py <target IP address>``
